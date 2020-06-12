@@ -1,5 +1,3 @@
-# Cracking the Coding Interview
-
 Below is a compilation of my notes from Cracking the Coding Interview
 
 - [Arrays and Strings](#arrays-and-strings)
