@@ -1,5 +1,9 @@
 Notes on how and why I organized the files and designed the classes/interfaces the way that they are.
 
+A brief note on some conventions that I use: 
+- add `_` after the name of private instance variables
+  - ex: `String key_`
+
 - [General Functions of an ADT](#general-functions-of-an-abstract-data-type)
 - [Java Generics](#java-generics)
 - [Interface](#interface)
@@ -8,16 +12,17 @@ Notes on how and why I organized the files and designed the classes/interfaces t
 # General functions of an abstract data type
 
 - create data type
-- add data to data type
-- get/access data from data type
-- remove data from data type
+- insert data to data type
+- get/access/search for data from data type
+- remove/delete data from data type
 - check if data type is empty
 
 # Java Generics
 
 - java generics allow for type-safety, they are somewhat equivalent to Templates in C++
   - you can have a 'generic' type instead of using an Object
-    - using an Object excludes primitives (such as `int`) and also requires typecasting in Java
+    - using an Object requires typecasting in Java
+    - HOWEVER, for the purposes of backwards compatibility, Java Generics do not support primitive types
 
 ```
 public class GenericClass<T> {
@@ -36,7 +41,9 @@ public static void main(String args[]) {
 
 # Interface
 
-- Interfaces are essentially a completely abstract class
+- Interfaces are essentially a completely abstract class.
+- These are used to create an AbstractDataType interface that all ADTs will implement
+  - b/c many different ADTs are implementing it, I use generic interfaces
 
 ## Java Generic Interface
 
@@ -44,6 +51,7 @@ public static void main(String args[]) {
 public interface GenericInterface<T> {
     public int someMethod(T thing);
 }
+```
 
 - In this case the `<T>` denotes the type
   - Only generic classes can implement generic interfaces
@@ -51,15 +59,22 @@ public interface GenericInterface<T> {
   - Then implementing this interface it would look like
 
 ```
-
 public class GenericClass<T> implements GenericInterface<T> {
   
- @Override
+@Override
 public int someMethod(T thing) {
-// do something
-}
+    // do something
+    }
 }
 
 ```
 
+# Generic Methods
+
+- you can also define generic methods
+
 ```
+public <T>T someMethod(){}
+```
+
+# Callable and Runnable in Java
