@@ -1,6 +1,8 @@
-package data_structures.arrays_and_strings.hash_table;
+package data_structures.arrays_and_strings;
 
 import data_structures.AbstractDataType;
+import data_structures.arrays_and_strings.hash_table_utils.DataItem;
+import data_structures.arrays_and_strings.hash_table_utils.HashFunction;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -24,27 +26,28 @@ import java.util.LinkedList;
  * @param <T> - the DataItem to be stored in the hash table
  */
 public class HashTable <T extends DataItem> extends AbstractDataType<T> {
-  private final double resizeThreshold = 0.75;
+  private final double RESIZE_THRESHOLD = 0.75;
 
   private LinkedList<T> _table[];
   private HashFunction _hash;
-  private int numItems;
+  private int _numItems;
 
   public HashTable(HashFunction hash) {
     _hash = hash;
+    _table = new LinkedList[11];
     Arrays.fill(_table, new LinkedList<T>());
-    numItems = 0;
+    _numItems = 0;
   }
 
   public HashTable(HashFunction hash, int tableSize) {
     _table = new LinkedList[tableSize];
     Arrays.fill(_table, new LinkedList<T>());
-    numItems = 0;
+    _numItems = 0;
   }
 
   @Override
   public void insert(T item) {
-    ++numItems;
+    ++_numItems;
     if (shouldResize()) {
       resize();
     }
@@ -60,7 +63,7 @@ public class HashTable <T extends DataItem> extends AbstractDataType<T> {
   @Override
   public void remove(T item) {
     if(_table[getIndex(item.getKey())].remove(item)) {
-      --numItems;
+      --_numItems;
     }
   }
 
@@ -85,7 +88,7 @@ public class HashTable <T extends DataItem> extends AbstractDataType<T> {
   }
 
   private boolean shouldResize() {
-    return numItems/_table.length >= resizeThreshold;
+    return _numItems/_table.length >= RESIZE_THRESHOLD;
   }
 
   private void resize() {

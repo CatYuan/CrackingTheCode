@@ -1,4 +1,4 @@
-package data_structures.arrays_and_strings.hash_table;
+package data_structures.arrays_and_strings.hash_table_utils;
 
 @FunctionalInterface
 public interface HashFunction<K> {
